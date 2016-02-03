@@ -6,13 +6,13 @@ import org.apache.http.impl.client.{BasicResponseHandler, DefaultHttpClient}
 
 class SObject(sObjectN : String) {
 	var sObjectName: String = sObjectN
-	val HOST = "https://ap2.salesforce.com"
-	val BASE_URL = "/services/data/v35.0/sobjects/"
+	//val HOST = new Util()
+	//val BASE_URL = "/services/data/v35.0/sobjects/"
 
 	def getList() : String = {
-		val host = "https://ap2.salesforce.com"
-		val baseUrl = "/services/data/v35.0/sobjects/"
 		val util = new Util()
+		val host = util.getHost()
+		val baseUrl = util.getBaseUrl()
 
 		val access_token = util.getAccessToken()
 		println(access_token)
@@ -26,12 +26,12 @@ class SObject(sObjectN : String) {
 		val handler = new BasicResponseHandler()
 		val body = handler.handleResponse(response)
 		return body
-    }
+	}
 
-    def createSObject(jsonData : String)  =  {
-    	val host = "https://ap2.salesforce.com"
-		val baseUrl = "/services/data/v35.0/sobjects/"
-		val util = new Util()
+	def createSObject(jsonData : String)  =  {
+    val util = new Util()
+    val host = util.getHost()
+    val baseUrl = util.getBaseUrl()
 
 		val access_token = util.getAccessToken()
 		println(access_token)
@@ -51,10 +51,10 @@ class SObject(sObjectN : String) {
 
     }
 
-    def deleteSObject(objectId: String) {
-    	val host = "https://ap2.salesforce.com"
-		val baseUrl = "/services/data/v35.0/sobjects/"
-		val util = new Util()
+  def deleteSObject(objectId: String) {
+    val util = new Util()
+    val host = util.getHost()
+    val baseUrl = util.getBaseUrl()
 
 		val accessToken = util.getAccessToken()
 		println(accessToken)
@@ -65,12 +65,12 @@ class SObject(sObjectN : String) {
 
 		val response = (new DefaultHttpClient).execute(delete)
 		println(response)
-    }
+  }
 
-    def patchSObject(objectId: String , jsonData: String) {
-    	val host = "https://ap2.salesforce.com"
-		val baseUrl = "/services/data/v35.0/sobjects/"
-		val util = new Util()
+  def patchSObject(objectId: String , jsonData: String) {
+    val util = new Util()
+    val host = util.getHost()
+    val baseUrl = util.getBaseUrl()
 
 		val accessToken = util.getAccessToken()
 		println(accessToken)
@@ -81,12 +81,12 @@ class SObject(sObjectN : String) {
 		patch.setEntity(new StringEntity(jsonData))
 		val response = (new DefaultHttpClient).execute(patch)
 		println(response)
-    }
+  }
 
-    def executeSOQL(soql: String): String = {
-    	val host = "https://ap2.salesforce.com"
-		val baseUrl = "/services/data/v35.0/query/?q="
-		val util = new Util()
+  def executeSOQL(soql: String): String = {
+    val util = new Util()
+    val host = util.getHost()
+    val baseUrl = util.getBaseUrl()
 
 		val accessToken = util.getAccessToken()
 		println("accessToken: " + accessToken)
@@ -100,5 +100,5 @@ class SObject(sObjectN : String) {
 		val handler = new BasicResponseHandler()
 		val body = handler.handleResponse(response)
 		return body
-    }
+  }
 }

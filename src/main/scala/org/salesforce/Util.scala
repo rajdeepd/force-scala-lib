@@ -2,8 +2,7 @@ package org.salesforce
 
 import org.apache.http.client.methods.HttpPost
 import org.apache.http.impl.client.{BasicResponseHandler, DefaultHttpClient}
-//import org.json.JSONObject
-//import org.json.JSONTokener
+
 import com.google.gson.Gson
 import com.typesafe.config._;
 
@@ -14,14 +13,24 @@ case class Token(access_token: String, instance_url: String,
 	signature: String)
 
 class Util {
+	def getHost() : String = {
+    val conf = ConfigFactory.load()
+    val host = conf.getString("force.Host")
+    return host
+  }
+
+  def getBaseUrl() : String = {
+    val conf = ConfigFactory.load()
+    val baseUrl = conf.getString("force.BaseUrl")
+    return baseUrl
+  }
 	def getAccessToken() : String = {
-	    	
 	    	val login = "https://login.salesforce.com/services/oauth2/token"
 	    	var access_token = ""
 	    	try {
 	    		val conf = ConfigFactory.load()
-		        val UserName = conf.getString("force.UserName")
-                val PassWord     = conf.getString("force.PassWord")
+          val UserName = conf.getString("force.UserName")
+          val PassWord     = conf.getString("force.PassWord")
 			    val LoginURL     = conf.getString("force.LoginURL")
 			    val GrantService = conf.getString("force.GrantService")
 			    val ClientID     = conf.getString("force.ClientID")

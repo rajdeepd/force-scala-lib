@@ -6,8 +6,7 @@ import org.apache.http.impl.client.{BasicResponseHandler, DefaultHttpClient}
 
 class SObject(sObjectN : String) {
 	var sObjectName: String = sObjectN
-	//val HOST = new Util()
-	//val BASE_URL = "/services/data/v35.0/sobjects/"
+
 
 	def getList() : String = {
 		val util = new Util()
@@ -27,6 +26,23 @@ class SObject(sObjectN : String) {
 		val body = handler.handleResponse(response)
 		return body
 	}
+
+  def getSObjectDetails(id : String) : String = {
+    val util = new Util()
+    val host = util.getHost()
+    val baseUrl = util.getBaseUrl()
+    val access_token = util.getAccessToken()
+    println(access_token)
+    val url = host + baseUrl + sObjectName + "/" + id
+    val request = new HttpGet(url)
+    request.addHeader("Authorization", "Bearer " + access_token)
+    request.addHeader("Content-type", "application/json")
+    val client = new DefaultHttpClient
+    val response = client.execute(request)
+    val handler = new BasicResponseHandler()
+    val body = handler.handleResponse(response)
+    return body
+  }
 
 	def createSObject(jsonData : String)  =  {
     val util = new Util()
@@ -101,4 +117,6 @@ class SObject(sObjectN : String) {
 		val body = handler.handleResponse(response)
 		return body
   }
+
+
 }

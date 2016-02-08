@@ -4,18 +4,25 @@ import org.apache.http.client.methods.{HttpDelete, HttpGet, HttpPatch, HttpPost}
 import org.apache.http.entity.StringEntity
 import org.apache.http.impl.client.{BasicResponseHandler, DefaultHttpClient}
 
-class SObject(sObjectN : String) {
+class SObject(sObjectN : String, baseUrlN : String) {
 	var sObjectName: String = sObjectN
+  var baseUrl: String = baseUrlN
 
 
 	def getList() : String = {
 		val util = new Util()
 		val host = util.getHost()
-		val baseUrl = util.getBaseUrl()
+		//baseUrl = util.getBaseUrl()
 
 		val access_token = util.getAccessToken()
-		println(access_token)
-	    val url = host + baseUrl + sObjectName
+		//println("access_token: " + access_token)
+    var url = ""
+    if(sObjectName != "") {
+      url = host + baseUrl + sObjectName
+    }else {
+      url = host + baseUrl
+    }
+    println("url: " + url)
 		val request = new HttpGet(url)
 
 		request.addHeader("Authorization", "Bearer " + access_token)
@@ -32,7 +39,7 @@ class SObject(sObjectN : String) {
     val host = util.getHost()
     val baseUrl = util.getBaseUrl()
     val access_token = util.getAccessToken()
-    println(access_token)
+    //println(access_token)
     val url = host + baseUrl + sObjectName + "/" + id
     val request = new HttpGet(url)
     request.addHeader("Authorization", "Bearer " + access_token)
@@ -50,7 +57,7 @@ class SObject(sObjectN : String) {
     val baseUrl = util.getBaseUrl()
 
 		val access_token = util.getAccessToken()
-		println(access_token)
+		//println(access_token)
 		val url = host + baseUrl + sObjectName
 		val post = new HttpPost(url)
  
@@ -89,7 +96,7 @@ class SObject(sObjectN : String) {
     val baseUrl = util.getBaseUrl()
 
 		val accessToken = util.getAccessToken()
-		println(accessToken)
+		//println(accessToken)
 		val url = host + baseUrl + sObjectName + "/" + objectId
 		val patch = new HttpPatch(url);
 		patch.addHeader("Authorization", "Bearer " + accessToken)

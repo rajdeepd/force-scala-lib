@@ -4,13 +4,14 @@ import org.apache.http.client.methods.{HttpDelete, HttpGet, HttpPatch, HttpPost}
 import org.apache.http.entity.StringEntity
 import org.apache.http.impl.client.{BasicResponseHandler, DefaultHttpClient}
 
-class SObject(sObjectN : String, baseUrlN : String) {
+class SObject(sObjectN  : String, utilN: Util) {
 	var sObjectName: String = sObjectN
-  var baseUrl: String = baseUrlN
+  var baseUrl: String = utilN.getBaseUrl()
+	var util:Util = utilN
 
 
 	def getList() : String = {
-		val util = new Util()
+		//val util = new Util()
 		val host = util.getHost()
 		//baseUrl = util.getBaseUrl()
 
@@ -35,11 +36,10 @@ class SObject(sObjectN : String, baseUrlN : String) {
 	}
 
   def getSObjectDetails(id : String) : String = {
-    val util = new Util()
+    //val util = new Util()
     val host = util.getHost()
     val baseUrl = util.getBaseUrl()
     val access_token = util.getAccessToken()
-    //println(access_token)
     val url = host + baseUrl + sObjectName + "/" + id
     val request = new HttpGet(url)
     request.addHeader("Authorization", "Bearer " + access_token)
@@ -52,7 +52,7 @@ class SObject(sObjectN : String, baseUrlN : String) {
   }
 
 	def createSObject(jsonData : String)  =  {
-    val util = new Util()
+    //val util = new Util()
     val host = util.getHost()
     val baseUrl = util.getBaseUrl()
 
@@ -75,7 +75,7 @@ class SObject(sObjectN : String, baseUrlN : String) {
     }
 
   def deleteSObject(objectId: String) {
-    val util = new Util()
+    //val util = new Util()
     val host = util.getHost()
     val baseUrl = util.getBaseUrl()
 
@@ -91,7 +91,7 @@ class SObject(sObjectN : String, baseUrlN : String) {
   }
 
   def patchSObject(objectId: String , jsonData: String) {
-    val util = new Util()
+    //val util = new Util()
     val host = util.getHost()
     val baseUrl = util.getBaseUrl()
 
@@ -109,7 +109,7 @@ class SObject(sObjectN : String, baseUrlN : String) {
   def executeSOQL(soql: String): String = {
     val util = new Util()
     val host = util.getHost()
-    val baseUrl = util.getBaseUrl()
+    val baseUrl = util.getQueryUrl()
 
 		val accessToken = util.getAccessToken()
 		println("accessToken: " + accessToken)

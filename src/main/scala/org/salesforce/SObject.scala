@@ -110,10 +110,11 @@ class SObject(sObjectN  : String, utilN: Util) {
     val util = new Util()
     val host = util.getHost()
     val baseUrl = util.getQueryUrl()
+	val sql = java.net.URLEncoder.encode(soql, "UTF-8") // need to add this function to fix the urlEncoder
 
 		val accessToken = util.getAccessToken()
 		println("accessToken: " + accessToken)
-		val url = host + baseUrl  + soql
+		val url = host + baseUrl  + sql
 		println("url: " + url)
 		val request = new HttpGet(url)
 		request.addHeader("Authorization", "Bearer " + accessToken)
